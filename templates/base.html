@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style/main.css">
+    <link href="https://fonts.googleapis.com/
+    css2?family=Anton&family=Open+Sans&display=swap" rel="stylesheet">
+    <title>Главная страница</title>
+</head>
+<body>
+    <header id="header" class="header">
+        <div class="container">
+            <div id="nav" class="nav">
+                <img src="../static/img/logo.png" class="logo">
+                <ul class="menu">
+                    <li>
+                        <a href="/">
+                            Главная
+                        </a>
+                    </li>
+                    {% if current_user.type_user == 1 %}
+                    <li>
+                        <a href="/admin">
+                            Админ панель
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if current_user.type_user == 3 %}
+                    <li>
+                        <a href="/#">
+                            Заявки
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li>
+                        <a href="/about">
+                            О компании
+                        </a>
+                    </li>
+                    <li class="dws-menu">
+                        <a href="#">
+                            Услуги
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/applications">
+                            Оставить заявку
+                        </a>
+                    </li>
+                </ul>
+                <a href="tel:+79781234567" class="tel">
+                    +7 978 123-45-67
+                </a>
+                {% if current_user.id %}
+                    <a href="/logout" class="auth">
+                        Выйти
+                    </a>
+                {% else %}
+                <a href="#popup" class="auth">
+                    Войти
+                </a>
+                {% endif %}
+            </div>
+            {% block content %}
+            <div class="offer">
+                <div class="main_text">
+                    <h1>РЕМОНТ БЫТОВОЙ 
+                        <br>
+                    ТЕХНИКИ НА ДОМУ</h1>
+                    <h2>в симфеорополе и симферопольском районе</h2>
+                </div>
+                <a href="#" class="btn"><h5>Заказать ремонт</h5></a>
+                <p>
+                    Мастер приедет к вам в удобное время, бесплатно<br> 
+                    продиагностирует поломку и назовет точную цену ремонта
+                </p>
+            </div>
+            <div class="wrapper">
+                <div class="btn-slider">
+                    <img src="../static/img/leftarrow.svg" alt="" class="prev">
+                </div>
+                <div class="slider-container">
+                    <div class="slider-track">
+                        {% for item in menu_list %}
+                            <div class="slider-item">
+                                <img src="../static/img/{{img_list[loop.index-1]}}" class="icon-item">
+                                <p>{{ item }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="btn-slider">
+                    <img src="../static/img/rightarrow.svg" alt="" class="next">
+                </div>
+            </div>
+        </div>
+    </header>
+    <section id="about" class="about">
+        <div class="container">
+            <div class="description">
+                <p class="about-us">We Can Fix It Almost <br> As Fast As You Can <br> Break It.</p>
+                <hr class="hr-about">
+                <p style="line-height: 30px;">We do fast phone repair. In most cases, technicians will be able 
+                <br> to repair your device in just minutes, we’ll normally get your 
+                <br> phone in and out in 45 minutes or less.</p>
+                <a href="#" class="btn-about"><h5>О нас</h5></a>
+            </div>
+            <div class="image-about">
+                <img src="../static/img/refrigerator-about.png" alt="" style="width: 450px; width: 450px; margin-top: 100px;">
+            </div>
+        </div>
+    </section>
+    <section id="about" class="choose-us">
+        <div class="container">
+            
+        </div>
+    </section>
+    {% endblock %}
+    <footer id="footer" class="footer">
+        <div class="container">
+        </div>
+    </footer>
+    <div id="popup" class="popup">
+        <div class="popup-body">
+            <div class="popup-content">
+                <a href="#nav" class="popup-close">X</a>
+                <div class="popup-title">
+                    Авторизация
+                </div>
+                <div class="popup-body">
+                    <form method="POST" class="form">
+                        <div class="column_form">
+                            <input type="email" placeholder="E-mail" class="auth_input email" name="login_email">
+                            <input type="password" placeholder="Пароль" class="auth_input pssw" name="login_pssw">
+                            <div class="row_checkbox">
+                                <input type="checkbox" id="sign-check" class="sign-check" name="remember">
+                                <label for="sign-check">Запомнить</label>
+                            </div>
+                            <input type="submit" value="Войти" class="sign-in">
+                        </div>
+                        <input type="text" name="check_login" value="login" style="visibility: hidden;">
+                        <p class="forgot">
+                            <a href="#popup-reg" class="registration">Регистрация</a>
+                            Забыли <a href="">пароль</a>?
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="popup-reg" class="popup-reg">
+        <div class="popup-body-reg">
+            <div class="popup-content-reg">
+                <a href="#nav" class="popup-close-reg">X</a>
+                <div class="popup-title-reg">
+                    Регистрация
+                </div>
+                <div class="popup-body-reg">
+                    <form method="POST" class="form" name="">
+                        <div class="column_form">
+                            {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <h3 style="color: rgb(131, 36, 36); max-width: 222px;">{{ message }}</h3>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                            <input type="text" placeholder="Ваше имя" class="auth_input name" name="name">
+                            <input type="email" placeholder="E-mail" class="auth_input email" name="email">
+                            <input type="text" placeholder="Ваш адрес" class="auth_input address" name="address">
+                            <input type="phone" placeholder="Номер телефона" class="auth_input telephone" name="telephone">
+                            <input type="password" placeholder="Пароль" class="auth_input pssw" name="pssw">
+                            <input type="password" placeholder="Повторите пароль" class="auth_input pssw" name="rep_pssw">
+                            <input type="submit" value="Зарегистрироваться" class="sign-in">
+                            <input type="text" name="check_login" value="registration" style="visibility: hidden;">
+                        </div>
+                        <p class="forgot"><a href="#popup">Авторизоваться</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+<script src="../static/scripts/index.js"></script>
+</body>
+</html>

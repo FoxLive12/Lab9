@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="application">
+    <h1>ЗАЯВКА НА РЕМОНТ</h1>
+    <div class="sub_text">
+        Для жителей Симферополя и Cимферопольскго района <br>
+        Отправляя заявку онлайн, вы получаете скидку 10% на работу мастера
+    </div>
+    <form method="POST" name="application">
+        <div class="form_app">
+            <label>Выберите тип техиники</label>
+            <select name="service_list" class="service_list">
+                {% for item in service_list %}
+                    <option value="{{item}}">{{item}}</option>
+                {% endfor %}
+            </select>
+            <label>Выберите мастера</label>
+            <select name="master_list" class="master_list">
+                {% for item in masters_list %}
+                    <option value="{{item}}">{{item}}</option>
+                {% endfor %}
+            </select>
+            <input type="text" placeholder="Марка техники" class="input_type" name="model">
+            <textarea name="problem" class="problem_input" cols="30" rows="10" placeholder="Опишите проблему"></textarea>
+            <input type="submit" value="Отправить" class="sign-in">
+        </div>
+    </form>
+</div>
+{% endblock %}
